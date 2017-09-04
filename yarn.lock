@@ -808,6 +808,12 @@ hexo-deployer-git@^0.3.1:
     moment "^2.18.0"
     swig "^1.4.2"
 
+hexo-filter-flowchart@^1.0.4:
+  version "1.0.4"
+  resolved "http://npm.byted.org/hexo-filter-flowchart/-/hexo-filter-flowchart-1.0.4.tgz#5b213126a02771df260ed0d5c6e04613486f9ccf"
+  dependencies:
+    deep-assign "^2.0.0"
+
 hexo-front-matter@^0.2.2:
   version "0.2.3"
   resolved "http://npm.byted.org/hexo-front-matter/-/hexo-front-matter-0.2.3.tgz#c7ca8ef420ea36bd85e8408a2e8c9bf49efa605e"
@@ -1305,13 +1311,13 @@ moment-timezone@^0.5.4:
   dependencies:
     moment ">= 2.9.0"
 
-"moment@>= 2.9.0", moment@^2.10.6, moment@~2.13.0:
-  version "2.13.0"
-  resolved "http://npm.byted.org/moment/-/moment-2.13.0.tgz#24162d99521e6d40f99ae6939e806d2139eaac52"
-
-moment@^2.18.0:
+"moment@>= 2.9.0", moment@^2.10.6, moment@^2.18.0:
   version "2.18.1"
   resolved "http://npm.byted.org/moment/-/moment-2.18.1.tgz#c36193dd3ce1c2eed2adb7c802dbbc77a81b1c0f"
+
+moment@~2.13.0:
+  version "2.13.0"
+  resolved "http://npm.byted.org/moment/-/moment-2.13.0.tgz#24162d99521e6d40f99ae6939e806d2139eaac52"
 
 morgan@^1.6.1:
   version "1.8.2"
