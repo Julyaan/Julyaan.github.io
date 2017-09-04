@@ -11,10 +11,12 @@ categories: 前端
 # 问题描述
 
 在建站之初，我用的随机背景图片作为整个网站的背景，再加上调用的api:unsplash.com（ [一个免费高清素材网站](https://zhuanlan.zhihu.com/p/20383705) ）逼格极高，所以显得整个网站即文艺又酷炫，但是由于图片尺寸较大，在网络环境一般的情况下，首屏用户体验不是很好。具体是什么样的呢？
-我从segmentfault上找了个图，情况类似：
-<img src=''>
+
+<img src='/images/xiamen.jpg' align=center>
+
 <!--more-->
 
+我从segmentfault上找了个图，情况类似：
 <img src='https://sfault-image.b0.upaiyun.com/403/232/4032326478-598f2e6002876_articlex' alt='IMG' align=center>
 
 再进行改造之后，期望是这样的：
