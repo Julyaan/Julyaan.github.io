@@ -1,12 +1,12 @@
 ---
 title: Hexo博客建站手记--CSS全屏背景图片加载优化方案
-date: 2017-09-04 13:51:36
+date: 2017-08-22 13:51:36
 tags:
 - hexo
 - CSS
 - 性能优化
 - 渐进式
-categories: 前端
+categories: 技术杂谈
 ---
 # 问题描述
 
