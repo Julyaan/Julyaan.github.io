@@ -8,6 +8,7 @@ tags:
 categories: 前端
 ---
 
+javascript原型世界还是挺有意思的，这篇文字主要是在借助chrome浏览器'剖跟溯源'，大家可以直接跳到文末看结论。
 # 缘起
 今天在牛客上看到这样一个题：
 ```javascript
@@ -106,3 +107,16 @@ var sum=new Function('num1','num2','return num1+num2');
 通过f能过调用a方法，但不能调用b方法；
 通过F是能取到b的，可以通过f.constructor.b 调用；
 同样，通过F也能取到a，可以同过f.constructor.a 调用。
+
+-----
+
+最近在知乎专栏上看到一种更形象的表示方法（跟上面我总结的那张图是一致的）：
+把 Object.prototype 必做JavaScript事件中对象的祖先，Function.prototpe必做机器的祖先，可以画出这样的图来（用[p]指代 \__ proto \__)
+
+<img src='http://7xwnfc.com1.z0.glb.clouddn.com/proto.jpeg'>
+
+可以认为，你的prototype所指的是你的模板对象，[p]所指的是你的原型对象，所以String,Number,包括作为构造函数的function这些机器也需要一个模板对象，表明自己继承自Object的关系，因此，再进行补充：
+
+<img src='http://7xwnfc.com1.z0.glb.clouddn.com/more.jpeg'>
+
+参考文章 [《JavaScript 世界万物诞生记》](zhuanlan.zhihu.com/p/22989691)
