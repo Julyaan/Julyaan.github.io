@@ -1,0 +1,1397 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="jJCIqghYDxThnDKb05qUmdMAAssbKmqXGOET-zna7-Y" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="算法,面试,动态规划," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Two eggs problem可以说是互联网面试中老生常谈的算法题了，经常可以在各大互联网公司的笔试真题中看到它的各类变种（腾讯大厦，球掉落问题，玻璃珠问题等等）。本文将深入探讨此类问题及其延伸问题的通用解法，并给出javascript代码实现。">
+<meta name="keywords" content="算法,面试,动态规划">
+<meta property="og:type" content="article">
+<meta property="og:title" content="动态规划法解析two eggs problem及其延伸问题">
+<meta property="og:url" content="http://Julyaan.com/2017/03/28/two-eggs-problem/index.html">
+<meta property="og:site_name" content="东篱与南山">
+<meta property="og:description" content="Two eggs problem可以说是互联网面试中老生常谈的算法题了，经常可以在各大互联网公司的笔试真题中看到它的各类变种（腾讯大厦，球掉落问题，玻璃珠问题等等）。本文将深入探讨此类问题及其延伸问题的通用解法，并给出javascript代码实现。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://source.unsplash.com/random/900x600">
+<meta property="og:image" content="http://img.blog.csdn.net/20170328155444822?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDU4MjA4Mg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2017-11-28T03:46:57.635Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="动态规划法解析two eggs problem及其延伸问题">
+<meta name="twitter:description" content="Two eggs problem可以说是互联网面试中老生常谈的算法题了，经常可以在各大互联网公司的笔试真题中看到它的各类变种（腾讯大厦，球掉落问题，玻璃珠问题等等）。本文将深入探讨此类问题及其延伸问题的通用解法，并给出javascript代码实现。">
+<meta name="twitter:image" content="https://source.unsplash.com/random/900x600">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://Julyaan.com/2017/03/28/two-eggs-problem/"/>
+
+
+
+
+<!-- 网页加载条 -->
+<script src="https://neveryu.github.io/js/src/pace.min.js"></script>
+
+  <title>动态规划法解析two eggs problem及其延伸问题 | 东篱与南山</title>
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?95d44ae4e547e2d248598628cb571fc8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/julyaan"><img style="position: absolute; top: 0; right: 0; border: 0; max-width: 10%" src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">东篱与南山</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Down by the Wendy Gardens</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://Julyaan.com/2017/03/28/two-eggs-problem/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Julyan Guo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="东篱与南山">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">动态规划法解析two eggs problem及其延伸问题</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-28T16:23:33+08:00">
+                2017-03-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/03/28/two-eggs-problem/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/03/28/two-eggs-problem/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Two eggs problem可以说是互联网面试中老生常谈的算法题了，经常可以在各大互联网公司的笔试真题中看到它的各类变种（腾讯大厦，球掉落问题，玻璃珠问题等等）。本文将深入探讨此类问题及其延伸问题的通用解法，并给出javascript代码实现。<br><img src="https://source.unsplash.com/random/900x600" width="900" height="600" alt="git" align="center"><br><a id="more"></a></p>
+<h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><h2 id="Two-eggs-problem"><a href="#Two-eggs-problem" class="headerlink" title="Two-eggs problem"></a>Two-eggs problem</h2><p>首先看下游戏的定义：</p>
+<blockquote>
+<p>有一幢100层的大楼，玩家可以到达大楼的任意楼层。现给玩家两个一模一样的鸡蛋，当玩家拿着鸡蛋从某一楼层扔下时，一定会出现两个结果，鸡蛋碎了或者没碎（完好无损）。该大楼有一个临界楼层，低于它的楼层往下扔鸡蛋时鸡蛋不会碎，等于或高于它时会碎。请为该玩家设计一种丢鸡蛋策略，使得该策略下的最坏情况的次数比其他任何策略最坏的次数都少。输出该策略下的最坏情况次数。</p>
+</blockquote>
+<p>很多人乍一看到这道题会很懵，什么叫丢鸡蛋策略？怎么设计？如果用代码给出设计方案？你可能会去把问题分解成第一次在哪个楼层扔，鸡蛋会不会碎，还剩几个鸡蛋，第二次在哪个楼层扔，鸡蛋会不会碎，还剩几个鸡蛋，第三次……然后你就会觉得这是一个特别复杂/抽象的问题，然后就放弃了。</p>
+<p>所以此类问题我们要换个思路去想，这里先抛开那些经典的算法思想，总结下解题思路：</p>
+<ul>
+<li><strong>分解为若干子问题</strong></li>
+<li><strong>化抽象为具体，不妨代入未知数，先进入子问题再说</strong></li>
+<li><strong>简化问题求解，比如将2个鸡蛋改成1个鸡蛋，100层楼改成10层楼</strong></li>
+<li><strong>根据上面两步，确定最终使用的方法（动态规划？回溯？分治）</strong></li>
+</ul>
+<p>有了以上的思路，我们很容易想到，用<strong>递归</strong>的思想去解决，如何递归呢？这里我们暂时卖下关子，看一下此类问题的通用表示方法：n-eggs problem</p>
+<hr>
+<h2 id="扩展到-n-eggs-problem"><a href="#扩展到-n-eggs-problem" class="headerlink" title="扩展到 n-eggs problem"></a>扩展到 n-eggs problem</h2><blockquote>
+<p>现在有m层楼（m&gt;1）,玩家手里有n个鸡蛋，求设计一种方法，使得在该方法下找到临界楼层的最坏情况次数最少。</p>
+</blockquote>
+<p>这个问题可以抽象为这样一个函数：</p>
+<center> throwNumber(floors,eggs)  =&gt; numOfWorstCase </center>
+
+<p>函数入口是楼层数和鸡蛋数，返回最优方案的最坏次数（throwNumbers of the worst case of the best strategy）。</p>
+<p>在下文中我们不妨用<strong>$\it Tn(f,e)$</strong>来表示f层楼e个鸡蛋的输出结果。</p>
+<hr>
+<h1 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h1><p>回到刚才讨论的解决思路，我们不妨分别考察下一个鸡蛋，两个鸡蛋，三个鸡蛋的$\it Tn(f,e)$ 求法。</p>
+<h2 id="one-eggs-problem"><a href="#one-eggs-problem" class="headerlink" title="one-eggs problem"></a>one-eggs problem</h2><center><img src="http://img.blog.csdn.net/20170328155444822?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDU4MjA4Mg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="one-egg problem"></center>
+
+<p>这类问题是不是很简单？因为你就只有一个鸡蛋，所以为了保证一定能找到临界楼层，我们只能从第一层开始遍历楼层，所以最坏情况的次数是楼层f, 那么可以得到：</p>
+<blockquote>
+<center><strong>$\it Tn(f,1) = f $</strong></center>
+
+</blockquote>
+<hr>
+<h2 id="two-eggs-problem"><a href="#two-eggs-problem" class="headerlink" title="two-eggs problem"></a>two-eggs problem</h2><p>我们不妨设 $\alpha _i $ 为第i次扔蛋选择的楼层。每次扔蛋有两种结果：</p>
+<ul>
+<li>鸡蛋碎了，那么临界楼层一定在 $\alpha _i $层及以下楼层范围内，问题转移为1个蛋，$\alpha _i $-1层楼的问题，即<strong>$\it Tn(\alpha _i-1,1)  $</strong></li>
+<li>鸡蛋没碎，那么临界楼层一定在 $\alpha _i $层以上，问题转移为2个蛋，100-$\alpha _i $层楼的问题，即<strong>$\it Tn(100-\alpha _i,2)  $</strong></li>
+</ul>
+<p>可以用以下流程图表示：</p>
+<p><div id="flowchart-0" class="flow-chart"></div><br>同时，我们应注意到$\it Tn(f,1) = f $，因此在第1次扔蛋后，蛋碎了，我们将直接得出确定性结果，如果蛋没碎，则问题转化为100-$\alpha_1$层楼的two-eggs问题，直接递归就可以求解了。说到这里，这道题其实就已经解决了，剩下的问题就是编程了。但是我们的要求要更高一些，通过数学推导，我们可以将时间复杂度降到O(1)，如何做到呢？</p>
+<p>试想我们第一次在第n层扔鸡蛋，如果碎了，我们只剩一个蛋，接下来就只能从第一层开始向上遍历到第n-1层，直到鸡蛋摔碎，此时的worstcase次数为n-1，加上第一次扔，总次数为n；</p>
+<p>如果没碎，我们应该向上跳跃n-1层取试，即取n+（n-1）层(这样能保证如果鸡蛋碎了,我们的worstcase即从第n+1层向上遍历到n+（n-1）层次数为n-2，加上第二次扔的一次，第一次的一次，总次数仍为n);</p>
+<p>如果第2次扔没碎，则应取n+(n-1)+(n-2)层扔，仍没碎则取n+(n-1)+(n-2)+(n-3),……直到达到第n次向上取1层。</p>
+<p>为了保证一定能找到临界楼层，需要满足：</p>
+<p><center>n+(n-1)+(n-2)+…+1&gt;=100</center><br>对n求解，向上取整，即得到最优方案的worstcase次数。如果你觉得以上论述不够严谨的话，我们可以通过数学公式进行推导论证：</p>
+<blockquote>
+<p>首先注意到:<center>$ Tn(\alpha,1)=\alpha$</center><br>第一次扔蛋后，我们可以得到最坏情况下次数满足不等式：</p>
+<p><center>$ Tn(100,2) = max(Tn(\alpha_1-1,1)+1,Tn(100-\alpha_1,2)+1)\leq\alpha_1 $<br>$\Downarrow$<br>$Tn(100-\alpha_i,2)\leq\alpha_1-1$<br>$\Downarrow$<br>将不等式(2)带回不等式(1)：<br>$ Tn(100-\alpha_1,2) = max(Tn(\alpha_2-1,1)+1,Tn(100-\alpha_1-\alpha_2,2)+1)\leq\alpha_2 \leq\alpha_1-1$<br>$\Downarrow$<br>…<br>$\Downarrow$<br>$Tn(100-\alpha_n,2) = max(Tn(\alpha _n-1,1)+1,Tn(100-\alpha _1-\alpha _2…-\alpha _n,2)+1)\leq\alpha _n \leq\alpha _{n -1}-1$<br>$\Downarrow$<br>$\alpha _n\leq\alpha _{n -1}-1…\leq\alpha _1-(n-1)$<br></center><br>注意到，当$\alpha_n$为1时，达到最终状态，不再继续递归，另外式中还应有约束条件：$100-\alpha_1-\alpha_2…-\alpha_n&gt;0$，即$\alpha_1+\alpha_2…-+\alpha_n$的值应<strong>恰好</strong>大于100。我们直接将$\alpha_n$取值为1，则根据最后一项不等式可推：</p>
+<p><center>100$\leq n+(n-1)+…+2+1\leq \alpha_1+\alpha_2…+\alpha_n$<br>$\Downarrow$<br>$1+2+…+n= \frac{n(n+1)}{2}\geq 100$</center><br>解出n$\geq$13.651, 取n=14.</p>
+</blockquote>
+<p>可以看到，此题的解题关键就是<strong>分解出子问题，找到子问题之间的重叠关系，推出状态转移方程</strong>。</p>
+<p>有了以上方法论，相信n-eggs问题我们也能迎刃而解。</p>
+<hr>
+<h2 id="n-eggs-problem"><a href="#n-eggs-problem" class="headerlink" title="n-eggs problem"></a>n-eggs problem</h2><h3 id="以3-eggs为例"><a href="#以3-eggs为例" class="headerlink" title="以3-eggs为例"></a>以3-eggs为例</h3><ul>
+<li><p>如果鸡蛋破碎，问题转化为k-1层下的2-eggs问题，状态转移方程为Tn(n,3)=1+Tn(k-1,2)</p>
+</li>
+<li><p>如果鸡蛋摔碎 ，问题转化为n-k层下的3-eggs问题，状态转移方程为Tn(n,3)=1+Tn(n-k,3)</p>
+<p>现在我们已经知道:</p>
+<blockquote>
+<p>$Tn(n，1)=n$<br>$Tn(n，2)=min (x)    s.t.   \frac{x(x+1)}{2}\geq 100  $</p>
+</blockquote>
+</li>
+</ul>
+<p>因此我们只要需要递归求解，动态更新最坏情形下的次数即可。但是还有一个很重要的点需要注意，这一点也是我们为什么采用动态规划法的原因，我们在下一部分展开。</p>
+<h3 id="n-eggs"><a href="#n-eggs" class="headerlink" title="n-eggs"></a>n-eggs</h3><p>其他将到这里，如果分解子问题，如何递推出状态转移方程已经不用多说了，直接将上部分Tn(f,e)中的3替换成未知量n,2替换成n-1即可。我们可以很容易的写出代码来，但如果仅仅如此，我们的代码很可能会内存溢出。</p>
+<p><strong>内存溢出</strong>的原因其实很好理解，这里不多解释。如何避免呢？这里就是动态规划法的优势所在了，<strong>由于经分解得到子问题并不是互相独立的</strong>。<strong>我们如果保存已解决的子问题的答案，在需要时再找出已求得的答案，这样就可以避免大量的重复计算，节省时间</strong>。这里我们在写代码时创建一个二维数组memory[F][E]来保存每次计算得出的Tn(f,e)的结果，并在函数入口处判断memory[f][e]是否存在，如果存在直接返回结果。</p>
+<hr>
+<h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><p>这里我用的javascript实现，运用闭包存储计算结果。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">throwNumber</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> memory=[];<span class="comment">//声明一个存储结果的一维矩阵</span></div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">floor,eggs</span>)</span>&#123;</div><div class="line">        <span class="keyword">if</span>(<span class="keyword">typeof</span>(memory[floor])!=<span class="string">'object'</span>) memory[floor]=<span class="keyword">new</span> <span class="built_in">Array</span>();<span class="comment">//动态创建二维矩阵</span></div><div class="line">        <span class="keyword">if</span>( memory[floor][eggs])  &#123;  <span class="keyword">return</span> memory[floor][eggs];&#125;<span class="comment">//如果矩阵中存在结果，直接返回结果</span></div><div class="line">        <span class="keyword">if</span>(floor&lt;<span class="number">3</span>) &#123;   memory[floor][eggs] = floor;<span class="keyword">return</span> floor;&#125;</div><div class="line">        <span class="keyword">if</span>(eggs==<span class="number">1</span>) &#123;   memory[floor][eggs] = floor;<span class="keyword">return</span> floor;&#125;</div><div class="line">        <span class="keyword">if</span>(eggs==<span class="number">2</span>)&#123; <span class="comment">//计算2-eggs问题</span></div><div class="line">            <span class="keyword">var</span> sum=<span class="number">0</span>,i=<span class="number">0</span>;</div><div class="line">            <span class="keyword">while</span>(sum&lt;floor)&#123;</div><div class="line">                i++;</div><div class="line">                sum=i*(i+<span class="number">1</span>)/<span class="number">2</span>;</div><div class="line">            &#125;</div><div class="line">            memory[floor][eggs]=i;</div><div class="line">            <span class="keyword">return</span> i</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(eggs&gt;<span class="number">2</span>)&#123; <span class="comment">//计算n-eggs问题</span></div><div class="line">            <span class="keyword">var</span> res=floor;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">2</span>;i&lt;floor;i++)&#123;</div><div class="line">                <span class="keyword">var</span> isBroken=<span class="built_in">arguments</span>.callee(i<span class="number">-1</span>,eggs<span class="number">-1</span>)+<span class="number">1</span>;</div><div class="line">                <span class="keyword">var</span> notBroken=<span class="built_in">arguments</span>.callee(floor-i,eggs)+<span class="number">1</span>;</div><div class="line">                <span class="keyword">var</span> temp=isBroken&gt;notBroken?isBroken:notBroken;</div><div class="line">                (res&gt;temp) &amp;&amp;  (res =temp)&gt;<span class="number">0</span>;</div><div class="line">            &#125;</div><div class="line">            memory[floor][eggs]=res</div><div class="line">            <span class="keyword">return</span> res;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">//主函数</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Tn</span>(<span class="params">f,e</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> throwNumber().call(<span class="keyword">this</span>,f,e);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h1 id="附部分计算结果"><a href="#附部分计算结果" class="headerlink" title="附部分计算结果"></a>附部分计算结果</h1><table>
+<thead>
+<tr>
+<th>floor</th>
+<th>2-eggs</th>
+<th>3-eggs</th>
+<th>4-eggs</th>
+<th>5-eggs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>50</td>
+<td>10</td>
+<td>7</td>
+<td>6</td>
+<td>6</td>
+</tr>
+<tr>
+<td>100</td>
+<td>14</td>
+<td>9</td>
+<td>8</td>
+<td>7</td>
+</tr>
+<tr>
+<td>200</td>
+<td>20</td>
+<td>11</td>
+<td>9</td>
+<td>8</td>
+</tr>
+<tr>
+<td>300</td>
+<td>24</td>
+<td>13</td>
+<td>10</td>
+<td>9</td>
+</tr>
+</tbody>
+</table>
+<p><script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">st=>start: Tn(100,2)
+e=>end: Tn(a-1,1)
+op=>operation: 选择在a层扔蛋
+cond=>condition: 蛋是否碎了？
+ee=>operation: Tn(100-a,2)
+
+st->op->cond
+cond(yes)->e
+cond(no)->ee</textarea><textarea id="flowchart-0-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-0-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+            <a href="/tags/面试/" rel="tag"># 面试</a>
+          
+            <a href="/tags/动态规划/" rel="tag"># 动态规划</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/27/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/03/fast-pow/" rel="prev" title="快速求幂算法分析及java实现">
+                快速求幂算法分析及java实现 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="/images/avatar.jpeg"
+              alt="Julyan Guo" />
+          
+            <p class="site-author-name" itemprop="name">Julyan Guo</p>
+            <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/julyaan" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://guojunyan.lofter.com/" target="_blank" title="Lofter">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/keeponjoking" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#问题描述"><span class="nav-number">1.</span> <span class="nav-text">问题描述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Two-eggs-problem"><span class="nav-number">1.1.</span> <span class="nav-text">Two-eggs problem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#扩展到-n-eggs-problem"><span class="nav-number">1.2.</span> <span class="nav-text">扩展到 n-eggs problem</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解决方案"><span class="nav-number">2.</span> <span class="nav-text">解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#one-eggs-problem"><span class="nav-number">2.1.</span> <span class="nav-text">one-eggs problem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#two-eggs-problem"><span class="nav-number">2.2.</span> <span class="nav-text">two-eggs problem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#n-eggs-problem"><span class="nav-number">2.3.</span> <span class="nav-text">n-eggs problem</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#以3-eggs为例"><span class="nav-number">2.3.1.</span> <span class="nav-text">以3-eggs为例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#n-eggs"><span class="nav-number">2.3.2.</span> <span class="nav-text">n-eggs</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码实现"><span class="nav-number">3.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#附部分计算结果"><span class="nav-number">4.</span> <span class="nav-text">附部分计算结果</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Julyan Guo</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://Julyan.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://Julyaan.com/2017/03/28/two-eggs-problem/';
+          this.page.identifier = '2017/03/28/two-eggs-problem/';
+          this.page.title = '动态规划法解析two eggs problem及其延伸问题';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://Julyan.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+  <!-- 颗粒漂浮背景 -->
+  <script type="text/javascript" src="/js/src/particle.js"></script>
+  <script type="text/javascript">
+  (function(){
+    var imageBg = new Image();
+      imageBg.onload = function () {
+          document.body.style.backgroundImage= 'url(https://source.unsplash.com/random/1600x900)'
+        }
+      imageBg.src = 'https://source.unsplash.com/random/1600x900'
+  })()
+  </script>
+</body>
+</html>
